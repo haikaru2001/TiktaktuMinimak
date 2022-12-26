@@ -99,7 +99,7 @@ function AIMove()
     if(level == "easy"){
 
     }
-    else if(level == "medium"){
+    else if(level == "med"){
 
     }
     else{
