@@ -7,6 +7,7 @@ let turnHistory = []
 
 // on page ready
 document.addEventListener("DOMContentLoaded", () => $('table').css('display', 'none'))
+document.addEventListener("DOMContentLoaded", () => $('#level').css('display', 'none'))
 
 function main()
 {
@@ -25,12 +26,32 @@ function main()
     $('table').css('display', 'table')
     $('#btn').html('Reset Game')
     nextTurn()
+    console.log(level)
+}
+
+function showlevel(){
+    players.x = $('#p1').val();
+    players.o = $('#p2').val();
+    
+    if (players.x == "ai" && players.o == "ai"){
+        $('#level').css('display', 'none');
+    }
+    else if (players.x == "ai" || players.o == "ai"){
+        $('#level').css(
+            'display', 'table',
+            'align-item', 'center'
+            );
+        
+    }
+    else
+        $('#level').css('display', 'none');
 }
 
 // event listener
 $('#btn').on('click', () => main())
-$('#p1').on('change', () => players.x = $('#p1').val() )
-$('#p2').on('change', () => players.o = $('#p2').val() )
+$('#p1').on('change', () => showlevel())
+$('#p2').on('change', () => showlevel())
+$('#level').on('change', () => level = $('#level').val() )
 
 function nextTurn()
 {
@@ -75,14 +96,22 @@ function nextTurn()
 
 function AIMove()
 {
-    let AI = new TicTacToeAI(turn, board)
-    AI.maxDepth = AIConfig[turn].maxDepth
-    let result = AI.getBestMove()
-    turnHistory.push({ player: turn, move: result })
-    board.move(turn, result.move)
-    turn = (turn == 'x') ? 'o' : 'x'
-    setTimeout(() => nextTurn(), 1)
-    return ''
+    if(level == "easy"){
+
+    }
+    else if(level == "medium"){
+
+    }
+    else{
+        let AI = new TicTacToeAI(turn, board)
+        AI.maxDepth = AIConfig[turn].maxDepth
+        let result = AI.getBestMove()
+        turnHistory.push({ player: turn, move: result })
+        board.move(turn, result.move)
+        turn = (turn == 'x') ? 'o' : 'x'
+        setTimeout(() => nextTurn(), 1)
+        return ''
+    }
 }
 
 
