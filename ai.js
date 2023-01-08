@@ -11,6 +11,28 @@ class TicTacToeAI
         this.board  = board
     }
 
+    getRandomMove(){
+
+        let minimax = this.minimax(this.board, false, 0)
+        
+        // search best moves in depth 0
+        // console.log(this.moves)
+        // console.log(minimax)
+        let bestScore       = -Infinity
+        let filter_depth_0  = this.moves.filter((el) => {
+            if (el.depth == 0) bestScore = Math.max(el.score, bestScore)
+            return el.depth === 0
+        })
+        let filter_best_move= filter_depth_0.filter((el) => el.score >= bestScore)
+        
+        // if multiple move
+        let bestMove = filter_best_move[Math.floor(Math.random() * filter_best_move.length)]
+        bestMove.instance = this
+
+        // return
+        return bestMove
+    }
+
     getBestMove()
     {
         let minimax = this.minimax(this.board, true, 0)

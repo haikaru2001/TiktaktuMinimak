@@ -96,20 +96,34 @@ function nextTurn()
 
 function AIMove()
 {
+    var levelselect = document.getElementById("level");
+    var level = levelselect.value
+    //console.log("easy diff")
     if(level == "easy"){
-
+        let AI = new TicTacToeAI(turn, board)
+        //AI.maxDepth = AIConfig[turn].maxDepth
+        let result = AI.getRandomMove()
+        turnHistory.push({ player: turn, move: result })
+        board.move(turn, result.move)
+        turn = (turn == 'x') ? 'o' : 'x'
+      
+        setTimeout(() => nextTurn(), 1)
+        
+        return ''
     }
     else if(level == "med"){
 
     }
-    else{
+    else{   
         let AI = new TicTacToeAI(turn, board)
         AI.maxDepth = AIConfig[turn].maxDepth
         let result = AI.getBestMove()
         turnHistory.push({ player: turn, move: result })
         board.move(turn, result.move)
         turn = (turn == 'x') ? 'o' : 'x'
+
         setTimeout(() => nextTurn(), 1)
+        
         return ''
     }
 }
